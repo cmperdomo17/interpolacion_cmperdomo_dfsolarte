@@ -19,11 +19,22 @@ namespace interpolacion {
             }
 
             double interpolar(double x_int){
-                // Determinar el intervalo i en donde se encuentra x_int
-                size_t i = 0;
-                size_t n = x.size();
-                size_t intervalos = n - 1;
 
+                size_t i = 0; 
+                size_t n = x.size(); /*!< Numero de datos*/
+                size_t intervalos = n - 1; /*!< Numero de intervalos*/
+
+                // Verificar que x_int esté dentro del rango de los datos
+                if (x_int < x[0]) {
+                    // x_int está por debajo del rango de los datos
+                    return NAN;
+                }
+                if (x_int > x[n-1]) {
+                    // x_int está por encima del rango de los datos
+                    return NAN;
+                }
+
+                // Determinar el intervalo i en donde se encuentra x_int
                 // Recorrer los intervalos hasta encontrar el intervalo i
                 for (i = 0; i < intervalos; i++){
                     if (x_int >= x[i] && x_int <= x[i + 1]){
@@ -31,25 +42,15 @@ namespace interpolacion {
                     }
                 }
 
-                // Verificar que x_int esté dentro del rango de los datos
-                if (i == 0 && x_int != x[0]) {
-                    // x_int está por debajo del rango de los datos
-                    return NAN;
-                }
-                if (i >= intervalos) {
-                    // x_int está por encima del rango de los datos
-                    return NAN;
-                }
-
                 // Evaluar el polinomio del trazador en x_int (18.36)
 
                 double h = x[i] - x[i - 1];
 
-                double a = (f2[i - 1] / (6 * h)) * (pow(x[i] - x_int, 3)) + (f2[i] / (6 * h)) * (pow(x_int - x[i - 1], 3));
+                double a = ((f2[i - 1] / (6 * h)) * (pow(x[i] - x_int, 3))) + ((f2[i] / (6 * h)) * (pow(x_int - x[i - 1], 3)));
 
-                double b = (y[i - 1] / h) - ((f2[i - 1] * h) / 6) * (x[i] - x_int);
+                double b = ((y[i - 1] / h) - ((f2[i - 1] * h) / 6)) * (x[i] - x_int);
 
-                double c = (y[i] / h) - ((f2[i] * h) / 6) * (x_int - x[i - 1]);
+                double c = ((y[i] / h) - ((f2[i] * h) / 6)) * (x_int - x[i - 1]);
 
                 double resultado = a + b + c;
 
@@ -101,7 +102,7 @@ namespace interpolacion {
 
                 // TODO 2: Calcular F2
                 // * Calcular F2: F2 = gauss(M)
-                // * Insertar 0 al inicioy al final de F2
+                // * Insertar 0 al inicio y al final de F2
                 // * (f2 en los extremos vale 0)
     
                 resultado = gauss(m);
