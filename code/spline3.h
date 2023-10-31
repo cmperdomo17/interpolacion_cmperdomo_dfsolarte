@@ -36,8 +36,8 @@ namespace interpolacion {
 
                 // Determinar el intervalo i en donde se encuentra x_int
                 // Recorrer los intervalos hasta encontrar el intervalo i
-                for (i = 0; i < intervalos; i++){
-                    if (x_int >= x[i] && x_int <= x[i + 1]){
+                for (i = 1; i < intervalos; i++){
+                    if (x_int >= x[i - 1] && x_int <= x[i]){
                         break;
                     }
                 }
@@ -104,8 +104,35 @@ namespace interpolacion {
                 // * Calcular F2: F2 = gauss(M)
                 // * Insertar 0 al inicio y al final de F2
                 // * (f2 en los extremos vale 0)
+
+                // matriz con los ceros al comienzo
+                for (i=0; i <m.size(); i++){
+                    for (size_t j=0; j<m[i].size(); j++){
+                        cout << m[i][j] << " ";
+                    }
+                    cout << endl;
+                }
+
+                // quitar los 0 al comienzo de las filas de la matriz
+                for (i = 0; i < intervalos - 1; i++){
+                    m[i].erase(m[i].begin());
+                }
+
+                cout << "\n" << endl;
+
+                // matriz sin los 0 al comienzo de las filas
+                for (i=0; i <m.size(); i++){
+                    for (size_t j=0; j<m[i].size(); j++){
+                        cout << m[i][j] << " ";
+                    }
+                    cout << endl;
+                }
     
                 resultado = gauss(m);
+
+                for (i=0; i<resultado.size(); i++){
+                   cout << resultado[i] << endl;
+                }
 
                 vector <double> c;
 
