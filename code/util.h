@@ -73,7 +73,7 @@ namespace util{
             int x_space = getCenteredWidth(x_width, x[i]);
             int y_space = getCenteredWidth(y_width, y[i]);
 
-            cout << setw(x_space) << right << x[i] << setw(x_width - x_space + y_space) << right << y[i] << endl;
+            cout << setw(x_space + 1) << right << x[i] << setw(x_width - x_space + y_space + 2) << right << y[i] << endl;
         }
         cout << str_repeat("=", x_width + y_width + 2) << endl;
         cout << "\n";

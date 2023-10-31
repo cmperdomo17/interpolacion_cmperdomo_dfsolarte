@@ -173,8 +173,6 @@ void caso_interpolacion_newton(){
     vector <double> x = {0.4f, 0.8f, 1.3f, 1.8f, 2.0f, 2.2f, 2.6f};
     vector <double> y = {1.452360f, 1.995632f, 2.719678f, 3.273019f, 3.359425f, 3.316678f, 2.669452f};
 
-    // Hallar polinomios interpolantes por Newton con grado 2, estimando Y(1.0)
-    
     // Instancia de Newton
     newton n(x, y);
 
@@ -183,12 +181,19 @@ void caso_interpolacion_newton(){
 
     // Valor a interpolar
     double x_int;
+    // Grado de interpolacion
     size_t grado;
+    // Valor interpolado
+    double y_int;
+    // Error de interpolacion
+    double error_int;
+    // Error de interpolacion con las posiciones iniciales y finales
+    double error_int_1; 
 
     cout << "\nInterpolacion por diferencias divididas de Newton" << endl;
 
     // Imprimir la tabla
-    imprimir_tabla(x, y, "Temperatura(K)", "B (cm3/mol)");
+    imprimir_tabla(x, y, "    X    ", "    Y    ");
 
     // Solicitar el valor a interpolar
     do{
@@ -198,22 +203,57 @@ void caso_interpolacion_newton(){
 
     // Solicitar el grado de interpolación
     do{
-        cout << "Ingrese el grado de interpolacion: ";
+        cout << "Ingrese el grado del polinomio, <= : " << x.size() - 1 << ", 0 para usar todos los datos: ";
         cin >> grado;
-    } while(grado < 1 || grado > x.size());
+    } while (grado > x.size());
 
-    // Interpolar el valor ingresado por el usuario con el grado especificado
-    double y_int = n.interpolar(x_int, grado);
 
-    n.interpolar(x_int, grado);
+    // Interpolar el valor ingresado por el usuario con todos los datos
+    if (grado == 0){
+        y_int = n.interpolar(x_int);
+        // Calcula el error de interpolacion con todos los datos
+        error_int = abs(n.calcular_error_interpolacion(x_int));
+        // Mostrar la y interpolada
+        cout << "\ny = " << setprecision(7) << y_int << endl;
+        // Mostrar el error de interpolacion
+        cout << "\nError de interpolacion: " << error_int << endl;
+    } else {
 
-    cout << "\ny = " << setprecision(7) << y_int << endl;
+        // Interpolar el valor ingresado por el usuario con el grado especificado
+        y_int = n.interpolar(x_int, grado);
+        // Calcula el error de interpolacion con el grado especificado
+        error_int = abs(n.calcular_error_interpolacion(x_int, grado));
 
-    // Imprimir el error
+        // Mostrar el Primer Intervalo
+        cout << "\nPrimer Intervalo: " << endl;
+        cout << "\n - Posicion Inicial: " << 0 << ", Posicion Final: " << grado << endl;
+        error_int_1 = abs(n.calcular_error_interpolacion(x_int, 0, grado));
+        cout << " - R: " << error_int_1 << endl;
 
-    double error_int = abs(n.calcular_error_interpolacion(x_int, grado));
+        // Mostrar el Segundo Intervalo
+        cout << "\nSegundo Intervalo: " << endl;
+        cout << "\n - Posicion Inicial: " << 1 << ", Posicion Final: " << grado + 1 << endl;
+        error_int_1 = abs(n.calcular_error_interpolacion(x_int, 1, grado + 1));
+        cout << " - R: " << error_int_1 << endl;
 
-    cout << "\nError de interpolacion: " << error_int << endl;
+        // Calcular Y superior e inferior
+        double y_superior = y_int + error_int;
+        double y_inferior = y_int - error_int;
+        double error_superior = error_int + error_int_1;
+        double error_inferior = error_int - error_int_1;
+
+        // Mostrar Y superior e inferior
+        cout << "\nY (superior): " << setprecision(7) << y_superior << endl;
+        cout << "Y (inferior): " << setprecision(7) << y_inferior << endl;
+        cout << "Error (superior): " << setprecision(7) << error_superior << endl;
+        cout << "Error (inferior): " << setprecision(7) << error_inferior << endl;
+
+        // Mostrar la y interpolada
+        cout << "\ny = " << setprecision(7) << y_int << endl;
+
+        // Mostrar el error de interpolacion
+        cout << "\nMejor error de interpolacion: " << error_int << endl;
+    }
 
 }
 
@@ -231,7 +271,7 @@ void caso_interpolacion_spline3(){
     cout << "\nInterpolacion mediante el metodo de Trazadores Cubicos" << endl;
 
     // Imprimir la tabla
-    imprimir_tabla(x, y, "  x  ", "  f(x)  ");
+    imprimir_tabla(x, y, "    x    ", "   f(x)    ");
     // Solicitar el valor a interpolar
     do{
         cout << "Ingrese el valor a interpolar: ";
@@ -258,12 +298,17 @@ void caso_interpolacion_lagrange(){
 
     // Valor a interpolar
     double x_int;
+    // Grado de interpolacion
     size_t grado;
+    // Valor interpolado
+    double y_int;
+    // Error de interpolacion
+    double error_int;
 
     cout << "\nInterpolacion mediante el metodo de Lagrange" << endl;
 
     // Imprimir la tabla
-    imprimir_tabla(x, y, "Temperatura(K)", "B (cm3/mol)");
+    imprimir_tabla(x, y, "    X    ", "    Y    ");
 
     // Solicitar el valor a interpolar
     do{
@@ -273,21 +318,28 @@ void caso_interpolacion_lagrange(){
 
     // Solicitar el grado de interpolación
     do{
-        cout << "Ingrese el grado de interpolacion: ";
+        cout << "Ingrese el grado del polinomio, <= : " << x.size() - 1 << ", 0 para usar todos los datos: ";
         cin >> grado;
-    } while(grado < 1 || grado > x.size());
+    } while (grado > x.size());
 
-    // Interpolar el valor ingresado por el usuario con el grado especificado
-    double y_int = l.interpolar(x_int, grado);
-
-    l.interpolar(x_int, grado);
-
-    cout << "\ny = " << setprecision(7) << y_int << endl;
-
-    // Imprimir el error
-
-    double error_int = abs(l.calcular_error_interpolacion(x_int, grado));
-
-    cout << "\nError de interpolacion: " << error_int << endl;
+    // Interpolar el valor ingresado por el usuario con todos los datos
+    if (grado == 0){
+        y_int = l.interpolar(x_int);
+        // Calcula el error de interpolacion con todos los datos
+        error_int = abs(l.calcular_error_interpolacion(x_int));
+        // Mostrar la y interpolada
+        cout << "\ny = " << setprecision(7) << y_int << endl;
+        // Mostrar el error de interpolacion
+        cout << "\nError de interpolacion: " << error_int << endl;
+    } else {
+        // Interpolar el valor ingresado por el usuario con el grado especificado
+        y_int = l.interpolar(x_int, grado);
+        // Calcula el error de interpolacion con el grado especificado
+        error_int = abs(l.calcular_error_interpolacion(x_int, grado));
+        // Mostrar la y interpolada
+        cout << "\ny = " << setprecision(7) << y_int << endl;
+        // Mostrar el error de interpolacion
+        cout << "\nError de interpolacion: " << error_int << endl;
+    }
     
 }

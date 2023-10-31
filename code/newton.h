@@ -177,6 +177,23 @@ namespace interpolacion{
             }
 
             /**
+             * @brief Calcula el error de interpolacion usando todos los datos
+             * @param x_int Valor de x a interpolar
+             * @return Error de interpolacion
+            */
+            double calcular_error_interpolacion(double x_int){
+                    
+                double valor_interpolado = interpolar(x_int);
+
+                int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();
+                double valor_real = y[pos];
+
+                return valor_interpolado - valor_real;
+            }
+
+            
+
+            /**
              * @brief Metodo estatico para calcular los coeficientes del polinomio
              * @param x Variable independiente
              * @param y Variable dependiente
