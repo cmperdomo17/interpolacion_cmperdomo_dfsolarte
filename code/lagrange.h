@@ -59,7 +59,6 @@ namespace interpolacion {
             */
             double interpolar(double x_int, int grado){              
 
-                // TODO: Implementar la interpolacion con un grado menor que n
                 // 0. Encontrar las posiciones de x_int dentro de los datos
                 int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();
                 int n = x.size() - 1;
@@ -191,7 +190,7 @@ namespace interpolacion {
 
                 // Mostrar los factores del polinomio
                 oss << "\n\nFactores del polinomio: " << endl;
-                oss << "\n" << endl;
+                oss << endl;
                 for(i = 0; i < b.size(); i++){          
                     oss << "b" << i << " = " << b[i] << endl;
                 }

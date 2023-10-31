@@ -26,7 +26,6 @@ using regresion::solucion_potencia;
 using regresion::solucion_exponencial;
 using regresion::solucion_cuadratica;
 
-
 /** 
  * @brief Parte 1: Regresion
 */
@@ -168,6 +167,8 @@ void caso_regresion(){
     caso_regresion_cuadratica(x, y, "\nCaso 4: Regresion Cuadratica", "x", "y");
 }
 
+// Casos de interpolacion
+
 void caso_interpolacion_newton(){
 
     vector <double> x = {0.4f, 0.8f, 1.3f, 1.8f, 2.0f, 2.2f, 2.6f};
@@ -177,7 +178,7 @@ void caso_interpolacion_newton(){
     newton n(x, y);
 
     // Imprimir el polinomio
-    cout << "\nPolinomio interpolante: " << n.polinomio() << endl;
+    cout << "\nPolinomio interpolante: \n\n" << n.polinomio() << endl;
 
     // Valor a interpolar
     double x_int;
@@ -190,7 +191,7 @@ void caso_interpolacion_newton(){
     // Error de interpolacion con las posiciones iniciales y finales
     double error_int_1; 
 
-    cout << "\nInterpolacion por diferencias divididas de Newton" << endl;
+    cout << "Interpolacion por diferencias divididas de Newton" << endl;
 
     // Imprimir la tabla
     imprimir_tabla(x, y, "    X    ", "    Y    ");
@@ -236,11 +237,23 @@ void caso_interpolacion_newton(){
         error_int_1 = abs(n.calcular_error_interpolacion(x_int, 1, grado + 1));
         cout << " - R: " << error_int_1 << endl;
 
-        // Calcular Y superior e inferior
-        double y_superior = y_int + error_int;
-        double y_inferior = y_int - error_int;
-        double error_superior = error_int + error_int_1;
-        double error_inferior = error_int - error_int_1;
+        // Calcular el índice del punto más cercano por encima de x_int
+        size_t index_sup = 0;
+        while (index_sup < x.size() && x[index_sup] <= x_int) {
+            index_sup++;
+        }
+
+        // Calcular el índice del punto más cercano por debajo de x_int
+        size_t index_inf = index_sup - 1;
+
+        // Calcular el error superior (error en el punto por encima)
+        double error_superior = abs(y_int - y[index_sup]);
+
+        // Calcular el error inferior (error en el punto por debajo)
+        double error_inferior = abs(y_int - y[index_inf]);
+
+        double y_inferior = y[index_inf];
+        double y_superior = y[index_sup];
 
         // Mostrar Y superior e inferior
         cout << "\nY (superior): " << setprecision(7) << y_superior << endl;
@@ -251,8 +264,12 @@ void caso_interpolacion_newton(){
         // Mostrar la y interpolada
         cout << "\ny = " << setprecision(7) << y_int << endl;
 
-        // Mostrar el error de interpolacion
-        cout << "\nMejor error de interpolacion: " << error_int << endl;
+        // Mostrar el mejor error de interpolacion
+        if (abs(error_superior) < abs(error_inferior)){
+            cout << "\nMejor error de interpolacion: " << error_superior << endl;
+        } else {
+            cout << "\nMejor error de interpolacion: " << error_inferior << endl;
+        }
     }
 
 }
@@ -294,7 +311,7 @@ void caso_interpolacion_lagrange(){
     lagrange l(x, y);
 
     // Imprimir el polinomio
-    cout << "\nPolinomio interpolante: " << l.polinomio() << endl;
+    cout << "\nPolinomio interpolante: \n\n" << l.polinomio() << endl;
 
     // Valor a interpolar
     double x_int;
@@ -304,8 +321,10 @@ void caso_interpolacion_lagrange(){
     double y_int;
     // Error de interpolacion
     double error_int;
+    // Error de interpolacion con las posiciones iniciales y finales
+    double error_int_1; 
 
-    cout << "\nInterpolacion mediante el metodo de Lagrange" << endl;
+    cout << "Interpolacion por diferencias divididas de Newton" << endl;
 
     // Imprimir la tabla
     imprimir_tabla(x, y, "    X    ", "    Y    ");
@@ -322,6 +341,7 @@ void caso_interpolacion_lagrange(){
         cin >> grado;
     } while (grado > x.size());
 
+
     // Interpolar el valor ingresado por el usuario con todos los datos
     if (grado == 0){
         y_int = l.interpolar(x_int);
@@ -332,14 +352,57 @@ void caso_interpolacion_lagrange(){
         // Mostrar el error de interpolacion
         cout << "\nError de interpolacion: " << error_int << endl;
     } else {
+
         // Interpolar el valor ingresado por el usuario con el grado especificado
         y_int = l.interpolar(x_int, grado);
         // Calcula el error de interpolacion con el grado especificado
         error_int = abs(l.calcular_error_interpolacion(x_int, grado));
+
+        // Mostrar el Primer Intervalo
+        cout << "\nPrimer Intervalo: " << endl;
+        cout << "\n - Posicion Inicial: " << 0 << ", Posicion Final: " << grado << endl;
+        error_int_1 = abs(l.calcular_error_interpolacion(x_int, 0, grado));
+        cout << " - R: " << error_int_1 << endl;
+
+        // Mostrar el Segundo Intervalo
+        cout << "\nSegundo Intervalo: " << endl;
+        cout << "\n - Posicion Inicial: " << 1 << ", Posicion Final: " << grado + 1 << endl;
+        error_int_1 = abs(l.calcular_error_interpolacion(x_int, 1, grado + 1));
+        cout << " - R: " << error_int_1 << endl;
+
+        
+        // Calcular el índice del punto más cercano por encima de x_int
+        size_t index_sup = 0;
+        while (index_sup < x.size() && x[index_sup] <= x_int) {
+            index_sup++;
+        }
+
+        // Calcular el índice del punto más cercano por debajo de x_int
+        size_t index_inf = index_sup - 1;
+
+        // Calcular el error superior (error en el punto por encima)
+        double error_superior = abs(y_int - y[index_sup]);
+
+        // Calcular el error inferior (error en el punto por debajo)
+        double error_inferior = abs(y_int - y[index_inf]);
+
+        double y_inferior = y[index_inf];
+        double y_superior = y[index_sup];
+
+        // Mostrar Y superior e inferior
+        cout << "\nY (superior): " << setprecision(7) << y_superior << endl;
+        cout << "Y (inferior): " << setprecision(7) << y_inferior << endl;
+        cout << "Error (superior): " << setprecision(7) << error_superior << endl;
+        cout << "Error (inferior): " << setprecision(7) << error_inferior << endl;
+
         // Mostrar la y interpolada
         cout << "\ny = " << setprecision(7) << y_int << endl;
-        // Mostrar el error de interpolacion
-        cout << "\nError de interpolacion: " << error_int << endl;
-    }
-    
+
+        // Mostrar el mejor error de interpolacion
+        if (abs(error_superior) < abs(error_inferior)){
+            cout << "\nMejor error de interpolacion: " << error_superior << endl;
+        } else {
+            cout << "\nMejor error de interpolacion: " << error_inferior << endl;
+        }
+    } 
 }

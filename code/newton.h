@@ -61,8 +61,10 @@ namespace interpolacion{
                 }
                 
                 // Mostrar los factores del polinomio
-                for(i = 0; i < b.size(); i++){
-                    std::cout << "b" << i << " = " << b[i] << std::endl;
+                oss << "\n\nFactores del polinomio: " << endl;
+                oss << endl;
+                for(i = 0; i < b.size(); i++){          
+                    oss << "b" << i << " = " << b[i] << endl;
                 }
 
                 return oss.str();
@@ -189,9 +191,7 @@ namespace interpolacion{
                 double valor_real = y[pos];
 
                 return valor_interpolado - valor_real;
-            }
-
-            
+            }           
 
             /**
              * @brief Metodo estatico para calcular los coeficientes del polinomio
