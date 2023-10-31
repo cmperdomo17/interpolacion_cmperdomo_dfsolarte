@@ -14,15 +14,15 @@ namespace interpolacion {
         public: 
             spline3(vector <double> p_x,
                     vector <double> p_y): x(p_x), y(p_y){
-                // Calcular las segundas derivadas
-                f2 = calcular_f2(); 
+                    // Calcular las segundas derivadas
+                    f2 = calcular_f2(); 
             }
 
             double interpolar(double x_int){
-
-                size_t i = 0; 
-                size_t n = x.size(); /*!< Numero de datos*/
-                size_t intervalos = n - 1; /*!< Numero de intervalos*/
+                
+                int i = 0; 
+                int n = x.size(); /*!< Numero de datos*/
+                int intervalos = n - 1; /*!< Numero de intervalos*/
 
                 // Verificar que x_int esté dentro del rango de los datos
                 if (x_int < x[0]) {
@@ -46,11 +46,11 @@ namespace interpolacion {
 
                 double h = x[i] - x[i - 1];
 
-                double a = ((f2[i - 1] / (6 * h)) * (pow(x[i] - x_int, 3))) + ((f2[i] / (6 * h)) * (pow(x_int - x[i - 1], 3)));
+                double a = ((f2[i - 1] / (6.0f * h)) * (pow(x[i] - x_int, 3.0f))) + ((f2[i] / (6.0f * h)) * (pow(x_int - x[i - 1], 3.0f)));
 
-                double b = ((y[i - 1] / h) - ((f2[i - 1] * h) / 6)) * (x[i] - x_int);
+                double b = ((y[i - 1] / h) - ((f2[i - 1] * h) / 6.0f)) * (x[i] - x_int);
 
-                double c = ((y[i] / h) - ((f2[i] * h) / 6)) * (x_int - x[i - 1]);
+                double c = ((y[i] / h) - ((f2[i] * h) / 6.0f)) * (x_int - x[i - 1]);
 
                 double resultado = a + b + c;
 
@@ -88,7 +88,7 @@ namespace interpolacion {
                     m[fila][i] = 2.0f * (x[i + 1] - x[i - 1]);
 
                     // * Tercer coeficiente
-                    if (i < intervalos - 2){
+                    if (i < intervalos - 1){
                         // Los puntos interiores tienen f''(xi+1)
                         m[fila][i + 1] = (x[i + 1] - x[i]);
                     };

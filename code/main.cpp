@@ -24,6 +24,9 @@ void caso_1_lagrange();
 /** @brief Caso 2 Lagrange - Grado n */
 void caso_2_lagrange();
 
+/** @brief Caso 3 Lagrange - Grado n */
+void caso_3_lagrange();
+
 /** @brief Caso 1 Trazadores Cubicos */
 void caso_1_spline3();
 
@@ -37,7 +40,8 @@ int main(){
         cout << "1. Caso 1 Newton" << endl;
         cout << "2. Caso 1 Lagrange" << endl;
         cout << "3. Caso 2 Lagrange" << endl;
-        cout << "4. Caso 1 Trazadores Cubicos" << endl;
+        cout << "4. Caso 3 Lagrange" << endl;
+        cout << "5. Caso 1 Trazadores Cubicos" << endl;
         cout << "0. Salir" << endl;
         cout << "\nIngrese una opcion: ";
         cin >> opcion;
@@ -53,6 +57,9 @@ int main(){
                 caso_2_lagrange();
                 break;
             case 4:
+                caso_3_lagrange();
+                break;
+            case 5:
                 caso_1_spline3();
                 break;
             case 0:
@@ -157,7 +164,7 @@ void caso_2_lagrange(){
 
     // Valor a interpolar
     double x_int;
-    int grado;
+    size_t grado;
 
     cout << "\nInterpolacion mediante el metodo de Lagrange" << endl;
 
@@ -178,6 +185,8 @@ void caso_2_lagrange(){
 
     // Interpolar el valor ingresado por el usuario con el grado especificado
     double y_int = l.interpolar(x_int, grado);
+
+    l.interpolar(x_int, grado);
 
     cout << "\ny = " << setprecision(7) << y_int << endl;
 
@@ -225,5 +234,55 @@ void caso_1_spline3(){
     
 }
 
+void caso_3_lagrange(){
 
+    vector <double> x = {
+        2.0f, 2.2f, 2.4f, 2.6f, 2.8f
+    };
+
+    vector <double> y = {
+        0.5103757f, 0.5207843f, 0.5104147f, 0.4813306f, 0.4359160f
+    };
+
+    // Instancia de Lagrange
+    lagrange l(x, y);
+
+    // Imprimir el polinomio
+    cout << "\nPolinomio interpolante: " << l.polinomio() << endl;
+
+    // Valor a interpolar
+    double x_int;
+    size_t grado;
+
+    cout << "\nInterpolacion mediante el metodo de Lagrange" << endl;
+
+    // Imprimir la tabla
+    imprimir_tabla(x, y, "Temperatura(K)", "B (cm3/mol)");
+
+    // Solicitar el valor a interpolar
+    do{
+        cout << "Ingrese el valor a interpolar: ";
+        cin >> x_int;
+    } while(x_int < x[0] || x_int > x[x.size() - 1]);
+
+    // Solicitar el grado de interpolación
+    do{
+        cout << "Ingrese el grado de interpolacion: ";
+        cin >> grado;
+    } while(grado < 1 || grado > x.size());
+
+    // Interpolar el valor ingresado por el usuario con el grado especificado
+    double y_int = l.interpolar(x_int, grado);
+
+    l.interpolar(x_int, grado);
+
+    cout << "\ny = " << setprecision(7) << y_int << endl;
+
+    // Imprimir el error
+
+    double error_int = abs(l.calcular_error_interpolacion(x_int, grado));
+
+    cout << "\nError de interpolacion: " << error_int << endl;
+    
+}
 

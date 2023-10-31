@@ -64,6 +64,11 @@ namespace interpolacion {
                 int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();
                 int n = x.size() - 1;
                             
+                if (x_int < x[0] || x_int > x[n]) {
+                    // x_int está por fuera del rango de los datos
+                    return NAN;
+                }
+
                 // 1. Si n_puntos es par (tomar un solo intervalo) 
                 if (grado % 2 == 0) {
                     int pos_Inicial = max(0, pos - grado / 2);
@@ -124,6 +129,7 @@ namespace interpolacion {
              * @return Error de interpolacion
             */
             double calcular_error_interpolacion(double x_int, int pos_inicial, int pos_final){
+
                 double valor_interpolado = interpolar(x_int, pos_inicial, pos_final);
 
                 int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();

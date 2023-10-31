@@ -50,12 +50,12 @@ namespace interpolacion{
                         << fabs(b[i]) << " ";
                     for (j = 0; j < i; j++){
                         oss << "(x - " << x[j] << ") ";
-                    };
+                    }
                 }
                 
                 // Mostrar los factores del polinomio
                 for(i = 0; i < b.size(); i++){
-                    cout << "b" << i << " = " << b[i] << endl;
+                    std::cout << "b" << i << " = " << b[i] << std::endl;
                 }
 
                 return oss.str();
@@ -90,7 +90,7 @@ namespace interpolacion{
              * @param y Variable dependiente
              * @param b Vector de coeficientes
             */
-            void static calcular_coeficientes(vector<double> x, vector<double> y, vector<double> &b){
+            vector<double> static calcular_coeficientes(vector<double> x, vector<double> y){
                 
                 size_t i,j;
                 size_t n = x.size();
@@ -115,7 +115,7 @@ namespace interpolacion{
                 }
 
                 // Tomar los coeficientes de la primera fila de la matriz
-                b = f[0];
+                return f[0];
 
             } 
 
