@@ -324,7 +324,7 @@ void caso_interpolacion_lagrange(){
     // Error de interpolacion con las posiciones iniciales y finales
     double error_int_1; 
 
-    cout << "Interpolacion por diferencias divididas de Newton" << endl;
+    cout << "Interpolacion por Lagrange" << endl;
 
     // Imprimir la tabla
     imprimir_tabla(x, y, "    X    ", "    Y    ");
