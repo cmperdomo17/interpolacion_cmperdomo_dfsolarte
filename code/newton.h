@@ -162,7 +162,7 @@ namespace interpolacion{
             }
 
             /**
-             * @brief Calcula el error de interpolacion el grado especificado
+             * @brief Calcula el error de interpolacion usando el grado especificado
              * @param x_int Valor de x a interpolar
              * @param grado Grado del polinomio p(x)
              * @return Error de interpolacion 

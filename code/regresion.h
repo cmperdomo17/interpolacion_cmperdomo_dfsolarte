@@ -44,8 +44,6 @@ namespace regresion{
         return (label_length - value_length) / 2 + value_length;
     }
 
-
-
     /**
      * @brief Solucion mediante Regresion Lineal Simple
     */
@@ -436,18 +434,6 @@ namespace regresion{
 
                 // Calcular y_prom
                 y_prom = sum_y / (double)sol.n;
-
-                
-
-                /*
-                cout << "sum_x: " << sum_x << endl;
-                cout << "sum_x2: " << sum_x2 << endl;
-                cout << "sum_x3: " << sum_x3 << endl;
-                cout << "sum_x4: " << sum_x4 << endl;
-                cout << "sum_y: " << sum_y << endl;
-                cout << "sum_xy: " << sum_xy << endl;
-                cout << "sum_x2y: " << sum_x2y << endl;
-                */
 
                 vector <vector<double>> m {
                     {(double)sol.n, sum_x, sum_x2, sum_y},
