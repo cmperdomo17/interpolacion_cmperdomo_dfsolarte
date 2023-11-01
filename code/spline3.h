@@ -53,7 +53,14 @@ namespace interpolacion {
                 double c = ((y[i] / h) - ((f2[i] * h) / 6.0f)) * (x_int - x[i - 1]);
 
                 cout << "\nEcuacion del trazador cubico en el intervalo [" << x_inicial << ", " << x_final << "]: " << endl;
-                cout << "f(x) = " << a << "(x - " << x[i] << ")^3 + " << b << "(x - " << x[i] << ") + " << c << endl;
+                
+                i = 0;
+                for (int j = 0; j < n - 1; j++) {
+                    if (x[j] <= x_final && x[j + 1] >= x_inicial) {
+                        cout << "S" << i << "(x) = " << a << "(x - " << x[j] << ")^3 + " << b << "(x - " << x[j] << ")^2 + " << c << "(x - " << x[j] << ") + " << y[j - 1] << endl;
+                        i++;
+                    }
+                }
 
                 double resultado = a + b + c;
 

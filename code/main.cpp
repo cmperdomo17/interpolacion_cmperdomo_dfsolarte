@@ -256,22 +256,21 @@ void caso_interpolacion_newton(){
         double y_superior = y[index_sup];
 
         // Mostrar Y superior e inferior
-        cout << "\nY (superior): " << setprecision(7) << y_superior << endl;
-        cout << "Y (inferior): " << setprecision(7) << y_inferior << endl;
-        cout << "Error (superior): " << setprecision(7) << error_superior << endl;
-        cout << "Error (inferior): " << setprecision(7) << error_inferior << endl;
+        cout << "\nY (superior): " << setprecision(6) << y_superior << endl;
+        cout << "Y (inferior): " << setprecision(6) << y_inferior << endl;
+        cout << "Error (superior): " << setprecision(6) << error_superior << endl;
+        cout << "Error (inferior): " << setprecision(6) << error_inferior << endl;
 
         // Mostrar la y interpolada
-        cout << "\ny = " << setprecision(7) << y_int << endl;
+        cout << "\ny = " << setprecision(6) << y_int << endl;
 
         // Mostrar el mejor error de interpolacion
         if (abs(error_superior) < abs(error_inferior)){
-            cout << "\nMejor error de interpolacion: " << error_superior << endl;
+            cout << "\nMejor error de interpolacion: " << setprecision(6) << error_superior << endl;
         } else {
-            cout << "\nMejor error de interpolacion: " << error_inferior << endl;
+            cout << "\nMejor error de interpolacion: " << setprecision(6) << error_inferior << endl;
         }
     }
-
 }
 
 void caso_interpolacion_spline3(){
