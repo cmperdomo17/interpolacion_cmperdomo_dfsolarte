@@ -295,10 +295,25 @@ void caso_interpolacion_spline3(){
         cin >> x_int;
     } while(x_int < x[0] || x_int > x[x.size() - 1]);
 
+    // Solicitar el intervalo para el Trazador Cubico
+    double x_inicial, x_final;
+
+    do{
+        cout << "\nIngrese el valor inicial del intervalo: ";
+        cin >> x_inicial;
+    } while(x_inicial < x[0] || x_inicial > x[x.size() - 1]);
+
+    do{
+        cout << "Ingrese el valor final del intervalo: ";
+        cin >> x_final;
+    } while(x_final < x[0] || x_final > x[x.size() - 1]);
+
     // Interpolar el valor ingresado por el usuario
-    double y_int = s3.interpolar(x_int);
+    double y_int = s3.interpolar(x_int, x_inicial, x_final);
 
     cout << "\ny = " << setprecision(7) << y_int << endl;
+
+
     
 }
 

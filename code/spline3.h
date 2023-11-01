@@ -18,7 +18,7 @@ namespace interpolacion {
                     f2 = calcular_f2(); 
             }
 
-            double interpolar(double x_int){
+            double interpolar(double x_int, double x_inicial, double x_final){
                 
                 int i = 0; 
                 int n = x.size(); /*!< Numero de datos*/
@@ -52,11 +52,15 @@ namespace interpolacion {
 
                 double c = ((y[i] / h) - ((f2[i] * h) / 6.0f)) * (x_int - x[i - 1]);
 
+                cout << "\nEcuacion del trazador cubico en el intervalo [" << x_inicial << ", " << x_final << "]: " << endl;
+                cout << "f(x) = " << a << "(x - " << x[i] << ")^3 + " << b << "(x - " << x[i] << ") + " << c << endl;
+
                 double resultado = a + b + c;
 
                 return resultado;
 
             }
+
         private:
             vector <double> x;
             vector <double> y;
