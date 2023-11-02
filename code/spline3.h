@@ -17,8 +17,13 @@ namespace interpolacion {
                     // Calcular las segundas derivadas
                     f2 = calcular_f2(); 
             }
-
-            double interpolar(double x_int, double x_inicial, double x_final){
+            
+            /**
+             * @brief Evaluar el polinomio del trazador cúbico en x_int
+             * @param x_int Punto a evaluar
+             * @return Valor interpolado en x_int
+            */
+            double interpolar(double x_int){
                 
                 int i = 0; 
                 int n = x.size(); /*!< Numero de datos*/
@@ -35,7 +40,6 @@ namespace interpolacion {
                 }
 
                 // Determinar el intervalo i en donde se encuentra x_int
-                // Recorrer los intervalos hasta encontrar el intervalo i
                 for (i = 1; i < intervalos; i++){
                     if (x_int >= x[i - 1] && x_int <= x[i]){
                         break;
@@ -52,24 +56,85 @@ namespace interpolacion {
 
                 double c = ((y[i] / h) - ((f2[i] * h) / 6.0f)) * (x_int - x[i - 1]);
 
-                cout << "\nEcuacion del trazador cubico en el intervalo [" << x_inicial << ", " << x_final << "]: " << endl;
-                
-                i = 0;
-                for (int j = 0; j < n - 1; j++) {
-                    if (x[j] <= x_final && x[j + 1] >= x_inicial) {
-                        cout << "S" << i << "(x) = " << a << "(x - " << x[j] << ")^3 + " << b << "(x - " << x[j] << ")^2 + " << c << "(x - " << x[j] << ") + " << y[j - 1] << endl;
-                        i++;
-                    }
-                }
-
                 double resultado = a + b + c;
 
                 return resultado;
 
             }
 
-        private:
-            vector <double> x;
+            /**
+             * @brief Interpolar los coeficientes del trazador cúbico en x_int y mostrar el polinomio de cada subintervalo
+             * @param x_int Punto a evaluar
+             * @return Vector de coeficientes del polinomio
+            */
+            vector <double> interpolar_trazador(double x_int){
+                
+                int i = 0;
+                int n = x.size(); /*!< Numero de datos*/
+                int intervalos = n - 1; /*!< Numero de intervalos*/
+
+                // Determinar el intervalo i en donde se encuentra x_int
+                for (i = 1; i < intervalos; i++){
+                    if (x_int >= x[i - 1] && x_int < x[i]){
+                        break;
+                    }
+                }
+
+                // Evaluar el polinomio del trazador en x_int (18.36)
+
+                double h = x[i] - x[i - 1];
+
+                double a1 = ((f2[i - 1] / (6.0f * h)));
+
+                double a2 = ((f2[i] / (6.0f * h)));
+
+                double a =  a1 + a2;
+
+                double b = ((y[i - 1] / h) - ((f2[i - 1] * h) / 6.0f));
+
+                double c = ((y[i] / h) - ((f2[i] * h) / 6.0f));
+
+                vector <double> coeficientes;
+
+                coeficientes.push_back(a);
+                coeficientes.push_back(b);
+                coeficientes.push_back(c);
+
+                cout << "\nTrazador Cubico en el intervalo [" << x[i - 1] << ", " << x[i] << "]" << endl;
+
+                cout << "f(x) = " << coeficientes[0] << "(x - " << x[i - 1] << ")^3 + " << coeficientes[1] << "(" << x[i] << " - x) + " << coeficientes[2] << "(x - " << x[i - 1] << ")" << endl;
+
+                return coeficientes;
+
+            }
+
+            /**
+             * @brief Interpolar los coeficientes de cada subintervalo segun el intervalo de x_inicial a x_final
+             * @param x_inicial Punto inicial del intervalo
+             * @param x_final Punto final del intervalo
+            */
+            void trazadores(double x_inicial, double x_final){
+
+                int n = x.size(); /*!< Numero de datos*/
+                vector <double> coeficientes;
+                int intervalos = n - 1; /*!< Numero de intervalos*/
+
+                // Encontrar el primer intervalo en donde se encuentra x_inicial
+                int i = 1;
+                while (i < intervalos && x[i] < x_inicial) {
+                    i++;
+                }
+
+                // Iterar sobre los intervalos hasta que se llegue al final del intervalo
+                while (i <= intervalos && x[i - 1] <= x_final) {
+                    coeficientes = interpolar_trazador(x_inicial);
+                    x_inicial = x[i++];
+                }
+                
+            }
+                            
+            private:
+                vector <double> x;
             vector <double> y;
             vector <double> f2;
             vector <double> calcular_f2(){
