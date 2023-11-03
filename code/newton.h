@@ -135,28 +135,30 @@ namespace interpolacion{
                     pos_inicial_2 = pos_Inicial + 1;
                     pos_final_2 = pos_Final - 1;
 
+                    double yInt_1 = interpolar(x_int, pos_Inicial, pos_Final);
+                    double yInt_2 = interpolar(x_int, pos_inicial_2, pos_final_2);
+
                     cout << "\nPrimer Intervalo: [" << pos_Inicial << ", " << pos_Final << "]" << endl;
-                    error_int_1 = abs(calcular_error_interpolacion(x_int, pos_Inicial, pos_Final));
+                    error_int_1 = abs(calcular_error_interpolacion(x_int, yInt_1));
                     cout << "Error (R^2): " << error_int_1 << endl;
 
-                    cout << "\nSegundo Intervalo: [" << pos_final_2 << ", " << pos_inicial_2 << "]" << endl;
-                    error_int_2 = abs(calcular_error_interpolacion(x_int, pos_inicial_2, pos_final_2));
+                    cout << "\nSegundo Intervalo: [" << pos_inicial_2 << ", " << pos_final_2 << "]" << endl;
+                    error_int_2 = abs(calcular_error_interpolacion(x_int, yInt_2));
                     cout << "Error (R^2): " << error_int_2 << endl;
-                }
-                            
-                double yInt_1 = interpolar(x_int, pos_Inicial, pos_Final);
-                double yInt_2 = interpolar(x_int, pos_inicial_2, pos_final_2);
-                
 
-                if (pos_final_2 <= n) {
-                
-                    if (abs(error_int_1) < abs(error_int_2)) {
-                        return yInt_1;
+                    if (pos_final_2 <= n) {
+                    
+                        if (abs(error_int_1) < abs(error_int_2)) {
+                            return yInt_1;
+                        }
+                        return yInt_2;
                     }
-                    return yInt_2;
+                    
+                    return yInt_1;
                 }
+
+                return NAN;            
                 
-                return yInt_1;
             }
 
             /**
@@ -182,9 +184,7 @@ namespace interpolacion{
              * @param grado Grado del polinomio p(x)
              * @return Error de interpolacion 
             */
-            double calcular_error_interpolacion(double x_int, int grado){
-
-                double valor_interpolado = interpolar(x_int, grado);
+            double calcular_error_interpolacion(double x_int, double valor_interpolado){
 
                 int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();
                 double valor_real = y[pos];
