@@ -126,11 +126,10 @@ namespace interpolacion {
                 }
 
                 // Iterar sobre los intervalos hasta que se llegue al final del intervalo
-                while (i <= intervalos && x[i - 1] <= x_final) {
+                while (i <= intervalos && x[i - 1] <= x_final) { 
                     coeficientes = interpolar_trazador(x_inicial);
                     x_inicial = x[i++];
                 }
-                
             }
                             
             private:
@@ -176,18 +175,12 @@ namespace interpolacion {
                     
                 };
 
-                // TODO 2: Calcular F2
-                // * Calcular F2: F2 = gauss(M)
-                // * Insertar 0 al inicio y al final de F2
-                // * (f2 en los extremos vale 0)
-
                 // Eliminar los 0 al comienzo de las filas de la matriz
                 for (i = 0; i < intervalos - 1; i++){
                     m[i].erase(m[i].begin());
                 }
 
                 resultado = gauss(m);
-
 
                 vector <double> c;
 

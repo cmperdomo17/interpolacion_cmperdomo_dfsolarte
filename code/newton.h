@@ -110,7 +110,14 @@ namespace interpolacion{
 
                 // 0. Encontrar las posiciones de x_int dentro de los datos
                 int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();
+                int n_puntos = grado + 1;
                 int n = x.size() - 1;
+                int pos_Inicial = max(0, pos - grado / 2);
+                int pos_Final = min(n, pos_Inicial + grado);
+                int pos_inicial_2 = 0;
+                int pos_final_2 = 0;
+                double error_int_1 = 0.0f;
+                double error_int_2 = 0.0f;
                             
                 if (x_int < x[0] || x_int > x[n]) {
                     // x_int está por fuera del rango de los datos
@@ -118,23 +125,31 @@ namespace interpolacion{
                 }
 
                 // 1. Si n_puntos es par (tomar un solo intervalo) 
-                if (grado % 2 == 0) {
-                    int pos_Inicial = max(0, pos - grado / 2);
-                    int pos_Final = min(n, pos_Inicial + grado);
+                if (n_puntos % 2 == 0) {
+                    double error_int = abs(calcular_error_interpolacion(x_int, pos_Inicial, pos_Final));
+                    cout << "\nIntervalo: [" << pos_Inicial << ", " << pos_Final << "]" << endl; 
+                    cout << "Error: " << error_int << endl;
                     return interpolar(x_int, pos_Inicial, pos_Final);
+                } else {
+                    // Caso de n_puntos impar
+                    pos_inicial_2 = pos_Inicial + 1;
+                    pos_final_2 = pos_Final - 1;
+
+                    cout << "\nPrimer Intervalo: [" << pos_Inicial << ", " << pos_Final << "]" << endl;
+                    error_int_1 = abs(calcular_error_interpolacion(x_int, pos_Inicial, pos_Final));
+                    cout << "Error (R^2): " << error_int_1 << endl;
+
+                    cout << "\nSegundo Intervalo: [" << pos_final_2 << ", " << pos_inicial_2 << "]" << endl;
+                    error_int_2 = abs(calcular_error_interpolacion(x_int, pos_inicial_2, pos_final_2));
+                    cout << "Error (R^2): " << error_int_2 << endl;
                 }
                             
-                // 2. Si n_puntos es impar (tomar dos intervalos)
-                int pos_Inicial = max(0, pos - grado / 2);
-                int pos_Final = min(n, pos_Inicial + grado);
-                            
                 double yInt_1 = interpolar(x_int, pos_Inicial, pos_Final);
-                double error_int_1 = abs(calcular_error_interpolacion(x_int, pos_Inicial, pos_Final));
-                            
-                if (pos_Final + 1 <= n) {
-                    double yInt_2 = interpolar(x_int, pos_Inicial + 1, pos_Final + 1);
-                    double error_int_2 = abs(calcular_error_interpolacion(x_int, pos_Inicial + 1, pos_Final + 1));
+                double yInt_2 = interpolar(x_int, pos_inicial_2, pos_final_2);
+                
 
+                if (pos_final_2 <= n) {
+                
                     if (abs(error_int_1) < abs(error_int_2)) {
                         return yInt_1;
                     }

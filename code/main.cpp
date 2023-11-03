@@ -188,8 +188,6 @@ void caso_interpolacion_newton(){
     double y_int;
     // Error de interpolacion
     double error_int;
-    // Error de interpolacion con las posiciones iniciales y finales
-    double error_int_1; 
 
     cout << "Interpolacion por diferencias divididas de Newton" << endl;
 
@@ -224,18 +222,6 @@ void caso_interpolacion_newton(){
         y_int = n.interpolar(x_int, grado);
         // Calcula el error de interpolacion con el grado especificado
         error_int = abs(n.calcular_error_interpolacion(x_int, grado));
-
-        // Mostrar el Primer Intervalo
-        cout << "\nPrimer Intervalo: " << endl;
-        cout << "\n - Posicion Inicial: " << 0 << ", Posicion Final: " << grado << endl;
-        error_int_1 = abs(n.calcular_error_interpolacion(x_int, 0, grado));
-        cout << " - R: " << error_int_1 << endl;
-
-        // Mostrar el Segundo Intervalo
-        cout << "\nSegundo Intervalo: " << endl;
-        cout << "\n - Posicion Inicial: " << 1 << ", Posicion Final: " << grado + 1 << endl;
-        error_int_1 = abs(n.calcular_error_interpolacion(x_int, 1, grado + 1));
-        cout << " - R: " << error_int_1 << endl;
 
         // Calcular el índice del punto más cercano por encima de x_int
         size_t index_sup = 0;
