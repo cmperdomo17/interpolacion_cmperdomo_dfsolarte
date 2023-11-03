@@ -287,7 +287,7 @@ void caso_interpolacion_spline3(){
     cout << "\nInterpolacion mediante el metodo de Trazadores Cubicos" << endl;
 
     // Imprimir la tabla
-    imprimir_tabla(x, y, "    x    ", "   f(x)    ");
+    imprimir_tabla(x, y, "    x    ", "   Y    ");
 
     // Solicitar el intervalo para el Trazador Cubico
     double x_inicial, x_final;
