@@ -12,11 +12,17 @@
 #include <cmath>
 #include <sstream>
 #include <string>
+#include <iostream>
 
 using std::vector;
 using std::string;
 using std::ostringstream;
 using std::isnan;
+using std::endl;
+using std::cout;
+using std::lower_bound;
+using std::fabs;
+using std::invalid_argument;
 
 namespace interpolacion{
 
@@ -123,7 +129,7 @@ namespace interpolacion{
                         pos_Final_aux;
                 //Validar que el grado no sea mayor a n_puntos
                 if (grado < 0 || grado >= n_puntos){
-                    throw std::invalid_argument("Grado invalido");
+                    throw invalid_argument("Grado invalido");
                 }
 
                 //Encontrar la posicion anterior y siguiente de x_int dentro de los datos originales
