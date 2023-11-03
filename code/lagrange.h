@@ -100,17 +100,17 @@ namespace interpolacion {
              * @param x_int Valor de x a interpolar
              * @return Valor interpolado
             */
-            double interpolar(double x_int, int pos_inicial, int pos_final){
+            double interpolar(double x_int, int pos_Inicial, int pos_final){
 
                 double resultado = 0.0f;
                 int j, k, n;
                 n = x.size();
 
-                if (pos_inicial < 0 || pos_final >= n) {return NAN;}
+                if (pos_Inicial < 0 || pos_final >= n) {return NAN;}
 
-                for(j = pos_inicial; j <= pos_final; j++){
+                for(j = pos_Inicial; j <= pos_final; j++){
                     double lj = 1.0f;
-                    for(k = pos_inicial; k <= pos_final; k++){
+                    for(k = pos_Inicial; k <= pos_final; k++){
                         if(k != j){
                             lj *= (x_int - x[k]) / (x[j] - x[k]);
                         }
@@ -121,15 +121,15 @@ namespace interpolacion {
             }
 
             /**
-             * @brief Calcula el error de interpolacion usando pos_inicial y pos_final
+             * @brief Calcula el error de interpolacion usando pos_Inicial y pos_final
              * @param x_int Valor de x a interpolar
-             * @param pos_inicial Posicion inicial del intervalo
+             * @param pos_Inicial Posicion inicial del intervalo
              * @param pos_final Posicion final del intervalo
              * @return Error de interpolacion
             */
-            double calcular_error_interpolacion(double x_int, int pos_inicial, int pos_final){
+            double calcular_error_interpolacion(double x_int, int pos_Inicial, int pos_final){
 
-                double valor_interpolado = interpolar(x_int, pos_inicial, pos_final);
+                double valor_interpolado = interpolar(x_int, pos_Inicial, pos_final);
 
                 int pos = lower_bound(x.begin(), x.end(), x_int) - x.begin();
                 double valor_real = y[pos];
