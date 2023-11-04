@@ -147,7 +147,8 @@ namespace interpolacion {
             }
                             
             private:
-                vector <double> x;
+
+            vector <double> x;
             vector <double> y;
             vector <double> f2;
             vector <double> calcular_f2(){
