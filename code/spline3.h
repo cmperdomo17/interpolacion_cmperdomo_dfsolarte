@@ -152,67 +152,67 @@ namespace interpolacion {
                 
             }
                             
-            private:
-                vector <double> x; /*!< Variable independiente */
-                vector <double> y; /*!< Variable dependiente */
-                vector <double> f2; /*!< Vector de coeficientes */
-                vector <double> calcular_f2(){
-                
-                vector <double> resultado;
+        private:
+            vector <double> x; /*!< Variable independiente */
+            vector <double> y; /*!< Variable dependiente */
+            vector <double> f2; /*!< Vector de coeficientes */
+            vector <double> calcular_f2(){
+            
+            vector <double> resultado;
 
-                size_t n = x.size();
-                size_t intervalos = n - 1;
-                size_t i;
+            size_t n = x.size();
+            size_t intervalos = n - 1;
+            size_t i;
 
-                vector <vector <double>> m(intervalos - 1);
-                for (i = 0; i < intervalos - 1; i++){
-                    m[i].resize(n);
-                }
+            vector <vector <double>> m(intervalos - 1);
+            for (i = 0; i < intervalos - 1; i++){
+                m[i].resize(n);
+            }
 
-                for ( i = 1; i < intervalos; i++ ){
+            for ( i = 1; i < intervalos; i++ ){
 
-                    size_t fila = i - 1;
+                size_t fila = i - 1;
 
-                    // * Primer coeficiente
-                    if (i > 1) {
-                        // Los puntos interiores tienen f''(xi-1)
-                        m[fila][i - 1] = (x[i] - x[i - 1]);
-                    };
-                    
-                    // * Segundo coeficiente
-                    m[fila][i] = 2.0f * (x[i + 1] - x[i - 1]);
-
-                    // * Tercer coeficiente
-                    if (i < intervalos - 1){
-                        // Los puntos interiores tienen f''(xi+1)
-                        m[fila][i + 1] = (x[i + 1] - x[i]);
-                    };
-                    
-                    double ci_1 = (6/(x[i + 1] - x[i])) * (y[i + 1] - y[i]);
-                    double ci_2 = (6/(x[i] - x[i - 1])) * (y[i - 1] - y[i]);
-                    double ci = ci_1 + ci_2;
-                    m[fila][intervalos] = ci;
-                    
+                // * Primer coeficiente
+                if (i > 1) {
+                    // Los puntos interiores tienen f''(xi-1)
+                    m[fila][i - 1] = (x[i] - x[i - 1]);
                 };
+                
+                // * Segundo coeficiente
+                m[fila][i] = 2.0f * (x[i + 1] - x[i - 1]);
 
-                // Eliminar los 0 al comienzo de las filas de la matriz
-                for (i = 0; i < intervalos - 1; i++){
-                    m[i].erase(m[i].begin());
-                }
+                // * Tercer coeficiente
+                if (i < intervalos - 1){
+                    // Los puntos interiores tienen f''(xi+1)
+                    m[fila][i + 1] = (x[i + 1] - x[i]);
+                };
+                
+                double ci_1 = (6/(x[i + 1] - x[i])) * (y[i + 1] - y[i]);
+                double ci_2 = (6/(x[i] - x[i - 1])) * (y[i - 1] - y[i]);
+                double ci = ci_1 + ci_2;
+                m[fila][intervalos] = ci;
+                
+            };
 
-                resultado = gauss(m);
+            // Eliminar los 0 al comienzo de las filas de la matriz
+            for (i = 0; i < intervalos - 1; i++){
+                m[i].erase(m[i].begin());
+            }
 
-                vector <double> c;
+            resultado = gauss(m);
 
-                c.push_back(0);
+            vector <double> c;
 
-                for (i = 0; i < resultado.size(); i++){
-                    c.push_back(resultado[i]);
-                }
+            c.push_back(0);
 
-                c.push_back(0);
+            for (i = 0; i < resultado.size(); i++){
+                c.push_back(resultado[i]);
+            }
 
-                return c;
+            c.push_back(0);
+
+            return c;
         };
     };
 }
