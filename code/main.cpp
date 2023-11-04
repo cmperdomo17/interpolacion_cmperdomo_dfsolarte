@@ -41,11 +41,6 @@ void caso_interpolacion_newton();
 */
 void caso_interpolacion_spline3();
 
-/** 
- * @brief Parte 2.c: Interpolacion Lagrange
-*/
-void caso_interpolacion_lagrange();
-
 int main() {
     int opcion;
 

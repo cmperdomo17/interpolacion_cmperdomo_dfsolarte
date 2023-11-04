@@ -58,7 +58,7 @@ namespace regresion{
         size_t n; /*!< Numero de datos */
 
         /**
-         *
+         * @brief Imprimir solucion encontrada
          */
          void imprimir(){
 
@@ -232,7 +232,9 @@ namespace regresion{
     class lineal_simple{
     public:
         /**
-         *
+         * @brief Crea una instancia de la solucion lineal simple
+         * @param p_x Variable independiente
+         * @param p_y Variable dependiente
          */
         lineal_simple(vector<double> p_x, vector<double> p_y):x(p_x), y(p_y){
         }
@@ -303,8 +305,10 @@ namespace regresion{
     
     public:
         /**
-         * @brief Crea una nueva instancia de regresion mediante funcion potencia
-        */
+         * @brief Crea una instancia de la solucion potencia
+         * @param p_x Variable independiente
+         * @param p_y Variable dependiente
+         */
         potencia(vector<double> p_x, vector<double> p_y):x(p_x), y(p_y){
         }
 
@@ -352,8 +356,10 @@ namespace regresion{
     
     public:
         /**
-         * @brief Crea una nueva instancia de regresion mediante funcion exponencial
-        */
+         * @brief Crea una instancia de la solucion exponencial
+         * @param p_x Variable independiente
+         * @param p_y Variable dependiente
+         */
         exponencial(vector<double> p_x, vector<double> p_y):x(p_x), y(p_y){
         }
 
@@ -399,6 +405,12 @@ namespace regresion{
     class cuadratica{
 
         public:
+
+            /**
+             * @brief Crea una instancia de la solucion cuadratica
+             * @param p_x Variable independiente
+             * @param p_y Variable dependiente
+             */
             cuadratica(vector<double> p_x, vector<double> p_y):x(p_x), y(p_y){
             };
             /**

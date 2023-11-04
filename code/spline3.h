@@ -12,6 +12,12 @@ using util::gauss;
 namespace interpolacion {
     class spline3 {
         public: 
+
+            /**
+             * @brief Crea una instancia de interpolacion mediante trazadores cubicos
+             * @param p_x Variable independiente
+             * @param p_y Variable dependiente
+             */
             spline3(vector <double> p_x,
                     vector <double> p_y): x(p_x), y(p_y){
                     // Calcular las segundas derivadas
@@ -151,10 +157,10 @@ namespace interpolacion {
             }
                             
             private:
-                vector <double> x;
-            vector <double> y;
-            vector <double> f2;
-            vector <double> calcular_f2(){
+                vector <double> x; /*!< Variable independiente */
+                vector <double> y; /*!< Variable dependiente */
+                vector <double> f2; /*!< Vector de coeficientes */
+                vector <double> calcular_f2(){
                 
                 vector <double> resultado;
 
