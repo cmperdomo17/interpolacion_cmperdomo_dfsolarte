@@ -99,11 +99,9 @@ namespace interpolacion {
                 coeficientes.push_back(b);
                 coeficientes.push_back(c);
 
-                int j = 1;
-
                 cout << "\nEcuacion del Trazador Cubico en el intervalo [" << x[i - 1] << ", " << x[i] << "]" << endl
-                     << "f" << j << "(x) = ";
-              
+                     << "f" << i << "(x) = ";
+                  
                 if (a1 != 0.0f){
                     cout << ((a1 < 0) ? " - " : "") << fabs(a1) << "*(" << x[i] << " - x)^3";
                 }
@@ -113,8 +111,6 @@ namespace interpolacion {
 
                 cout << ((b < 0) ? " - " : " + ") << fabs(b) << "*(" << x[i] << " - x)";
                 cout << ((c < 0) ? " - " : " + ") << fabs(c) << "*(x - " << x[i - 1] << ")" << endl;
-
-                j++;
 
                 return coeficientes;
 
