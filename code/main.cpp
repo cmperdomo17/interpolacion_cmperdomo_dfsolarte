@@ -277,7 +277,7 @@ void caso_interpolacion_spline3(){
     do{
         cout << "\nIngrese el valor inicial del intervalo: ";
         cin >> x_inicial;
-    } while(x_inicial < x[0 - 1] || x_inicial > x[x.size() - 1]); 
+    } while(x_inicial < x[0] || x_inicial > x[x.size() - 1]); 
 
     do{
         cout << "Ingrese el valor final del intervalo: ";
@@ -295,6 +295,6 @@ void caso_interpolacion_spline3(){
     //Interpolar el valor ingresado por el usuario
     double y_int = s3.interpolar(x_int);
 
-    cout << "\ny = " << setprecision(7) << y_int << endl;
+    cout << "\ny = " << setprecision(6) << y_int << endl;
     
 }

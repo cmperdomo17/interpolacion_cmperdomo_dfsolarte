@@ -88,21 +88,33 @@ namespace interpolacion {
 
                 double a2 = ((f2[i] / (6.0f * h)));
 
-                double a =  a1 + a2;
-
                 double b = ((y[i - 1] / h) - ((f2[i - 1] * h) / 6.0f));
 
                 double c = ((y[i] / h) - ((f2[i] * h) / 6.0f));
 
                 vector <double> coeficientes;
 
-                coeficientes.push_back(a);
+                coeficientes.push_back(a1);
+                coeficientes.push_back(a2);
                 coeficientes.push_back(b);
                 coeficientes.push_back(c);
 
-                cout << "\nTrazador Cubico en el intervalo [" << x[i - 1] << ", " << x[i] << "]" << endl;
+                int j = 1;
 
-                cout << "f(x) = " << coeficientes[0] << "(x - " << x[i - 1] << ")^3 + " << coeficientes[1] << "(" << x[i] << " - x) + " << coeficientes[2] << "(x - " << x[i - 1] << ")" << endl;
+                cout << "\nEcuacion del Trazador Cubico en el intervalo [" << x[i - 1] << ", " << x[i] << "]" << endl
+                     << "f" << j << "(x) = ";
+              
+                if (a1 != 0.0f){
+                    cout << ((a1 < 0) ? " - " : "") << fabs(a1) << "*(" << x[i] << " - x)^3";
+                }
+                if (a2 != 0.0f){
+                    cout << ((a2 < 0) ? " - " : " + ") << fabs(a2) << "*(x - " << x[i - 1] << ")^3";
+                }
+
+                cout << ((b < 0) ? " - " : " + ") << fabs(b) << "*(" << x[i] << " - x)";
+                cout << ((c < 0) ? " - " : " + ") << fabs(c) << "*(x - " << x[i - 1] << ")" << endl;
+
+                j++;
 
                 return coeficientes;
 
@@ -119,6 +131,11 @@ namespace interpolacion {
                 vector <double> coeficientes;
                 int intervalos = n - 1; /*!< Numero de intervalos*/
 
+                cout << "\nSegundas Derivadas: " << endl;
+                for (size_t i = 0; i < f2.size(); i++){
+                    cout << "f''(" << x[i] << ") = " << setprecision(6) << f2[i] << endl;
+                }
+
                 // Encontrar el primer intervalo en donde se encuentra x_inicial
                 int i = 1;
                 while (i < intervalos && x[i] < x_inicial) {
@@ -130,6 +147,7 @@ namespace interpolacion {
                     coeficientes = interpolar_trazador(x_inicial);
                     x_inicial = x[i++];
                 }
+                
             }
                             
             private:
